@@ -87,5 +87,16 @@ namespace BlazorDapperCRUD.Data
             }
             return true;
         }
+
+        public async Task<IEnumerable<UTOneFeedback>> FeedbackList()
+        {
+            IEnumerable<UTOneFeedback> feedbacks;
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                feedbacks = await conn.QueryAsync<UTOneFeedback>("spUTOneFeedback_GetAll", commandType: CommandType.StoredProcedure);
+            }
+            return feedbacks;
+
+        }
     }
 }

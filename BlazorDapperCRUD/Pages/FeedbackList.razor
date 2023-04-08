@@ -1,0 +1,68 @@
+﻿@using BlazorDapperCRUD.Data
+@page "/feedbacklist"
+@inject IVideoService VideoService
+
+<h3>Feedback List</h3>
+<p style="text-align:center">
+    <!-- Calling videoaddedit with id of zero configures page for Insert -->
+    <a href="/videoaddedit/0">Add a Video</a>
+</p>
+@if (feedbacks == null)
+{
+    <p style="text-align:center">
+        <img src="../images/loader.gif" />
+    </p>
+}
+else
+{
+    <table>
+        <tr>
+            <th>Edit</th>
+            <th>Feedback Content</th>
+            <th>Date Published</th>
+            <th>Is Active</th>
+            <th>Delete</th>
+        </tr>
+        @foreach (var feedback in feedbacks)
+        {
+    <tr>
+        <td>
+            <!-- Calling videoaddedit with id configures page for Update of that table row -->
+            <a href="videoaddedit/@feedback.FeedbackID">
+                <img src="../images/iEdit.png" />
+            </a>
+        </td>
+        <td>@feedback.FeedbackContent</td>
+        <td>@feedback.FeedbackDate.ToShortDateString()</td>
+        <td>
+            @*Show a green check for active videos...*@
+            @if (feedback.UserRating > 2)
+            {
+                <img src="../images/iGreenCheck.png" />
+            }
+            @* ...a red X otherwise *@
+            else
+            {
+                <img src="../images/iRedX.png" />
+            }
+        </td>
+        @* Trashcan icon, only if you want to offer physical deletes *@
+        <td>
+            <a href="videodelete/@feedback.FeedbackID">
+                <img src="../images/iTrash.png" alt="Delete" title="Delete" />
+            </a>
+        </td>
+    </tr>
+        }
+    </table>
+}
+
+@code {
+    // Create and empty list, named viideos, of empty Video objects.
+    IEnumerable<UTOneFeedback> feedbacks;
+    protected override async Task OnInitializedAsync()
+    {
+        //Populate the list of video objects from the Video table.
+        feedbacks = await VideoService.FeedbackList();
+    }
+}

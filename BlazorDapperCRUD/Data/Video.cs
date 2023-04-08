@@ -10,4 +10,18 @@ namespace BlazorDapperCRUD.Data
         public DateTime DatePublished { get; set; }
         public bool IsActive { get; set; }
     }
+
+    public class UTOneFeedback
+    {
+        public int FeedbackID { get; set; }
+
+        public string NRP { get; set; }
+
+        public DateTime FeedbackDate { get; set; }
+
+        public string FeedbackContent { get; set; }
+
+        public byte? UserRating { get; set; }
+
+    }
 }

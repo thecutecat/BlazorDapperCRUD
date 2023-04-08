@@ -11,5 +11,7 @@ namespace BlazorDapperCRUD.Data
         Task<Video> Video_GetOne(int Id);
         Task<bool> VideoUpdate(Video video);
         Task<bool> VideoDelete(int id);
+
+        Task<IEnumerable<UTOneFeedback>> FeedbackList();
     }
 }
